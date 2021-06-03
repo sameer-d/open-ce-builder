@@ -47,7 +47,7 @@ RUN export PATH="${PATH}" && \
     sudo rm -f /run/nologin && \
     yes | ssh-keygen -f $HOME/.ssh/id_rsa -q -t rsa -N '' && cp $HOME/.ssh/id_rsa.pub $HOME/.ssh/authorized_keys && \
     echo ". $CONDA_HOME/etc/profile.d/conda.sh" >> ${HOME}/.bashrc && \
-    echo "conda activate base" >> ${HOME}/.bashrc && \
+    echo "conda activate base" >> ${HOME}/.bashrc && 
     #mkdir -p ${TARGET_DIR}
 
 #COPY ${LOCAL_CONDA_CHANNEL} ${TARGET_DIR}
