@@ -44,8 +44,10 @@ RUN export PATH="${PATH}" && \
     $CONDA_HOME/bin/conda config --system --set auto_update_conda false && \
     $CONDA_HOME/bin/conda config --system --set notify_outdated_conda false && \
     $CONDA_HOME/bin/conda --version && \
-    sudo rm -f /run/nologin && \
-    yes | ssh-keygen -f $HOME/.ssh/id_rsa -q -t rsa -N '' && cp $HOME/.ssh/id_rsa.pub $HOME/.ssh/authorized_keys && \
+    mkdir -p $CONDA_HOME/conda-bld && \
+    mkdir -p $HOME/.cache && \
+    echo "export PYTHONPATH=${PYTHONPATH}:$HOME/open_ce" >> ${HOME}/.bashrc && \
+    chown -R ${OPENCE_USER}:${OPENCE_GROUP} ${CONDA_HOME} && \
     echo ". $CONDA_HOME/etc/profile.d/conda.sh" >> ${HOME}/.bashrc && \
     echo "conda activate base" >> ${HOME}/.bashrc 
     #mkdir -p ${TARGET_DIR}
