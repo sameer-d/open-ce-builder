@@ -6,9 +6,9 @@ ENV PATH=$CONDA_HOME/bin:$PATH
 ENV OPEN_CE_CONDA_BUILD=3.20.5
 
 ARG OPENCE_USER=builder
-#ARG LOCAL_CONDA_CHANNEL
-#ARG CONDA_ENV_FILE
-#ARG TARGET_DIR
+ARG LOCAL_CONDA_CHANNEL=output
+ARG CONDA_ENV_FILE
+ARG TARGET_DIR
 
 ENV OPENCE_GROUP=${OPENCE_USER}
 ARG GROUP_ID=1500
@@ -49,11 +49,11 @@ RUN export PATH="${PATH}" && \
     yes | ssh-keygen -f $HOME/.ssh/id_rsa -q -t rsa -N '' && cp $HOME/.ssh/id_rsa.pub $HOME/.ssh/authorized_keys && \
     echo ". $CONDA_HOME/etc/profile.d/conda.sh" >> ${HOME}/.bashrc && \
     echo "conda activate base" >> ${HOME}/.bashrc 
-    #mkdir -p ${TARGET_DIR}
+    mkdir -p ${TARGET_DIR}
 
-#COPY ${LOCAL_CONDA_CHANNEL} ${TARGET_DIR}
+COPY ${LOCAL_CONDA_CHANNEL} ${TARGET_DIR}
 
-#RUN sudo chown -R ${OPENCE_USER}:${OPENCE_GROUP} ${TARGET_DIR} && \
-    #if [ -n "$CONDA_ENV_FILE" ]; then $CONDA_HOME/bin/conda env create -f ${TARGET_DIR}/${CONDA_ENV_FILE}; fi && \
-    #rm -rf ${TARGET_DIR} && \
-    #conda clean -y --all
+RUN sudo chown -R ${OPENCE_USER}:${OPENCE_GROUP} ${TARGET_DIR} && \
+    if [ -n "$CONDA_ENV_FILE" ]; then $CONDA_HOME/bin/conda env create -f ${TARGET_DIR}/${CONDA_ENV_FILE}; fi && \
+    rm -rf ${TARGET_DIR} && \
+    conda clean -y --all
