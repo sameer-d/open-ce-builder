@@ -49,6 +49,7 @@ RUN export PATH="${PATH}" && \
     yes | ssh-keygen -f $HOME/.ssh/id_rsa -q -t rsa -N '' && cp $HOME/.ssh/id_rsa.pub $HOME/.ssh/authorized_keys && \
     echo ". $CONDA_HOME/etc/profile.d/conda.sh" >> ${HOME}/.bashrc && \
     echo "conda activate base" >> ${HOME}/.bashrc && \
+    ls && \
     mkdir -p "${TARGET_DIR}"
 
 COPY ${LOCAL_CONDA_CHANNEL} ${TARGET_DIR}
