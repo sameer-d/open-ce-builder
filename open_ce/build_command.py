@@ -104,6 +104,22 @@ class BuildCommand():
 
         return all(conda_utils.output_file_exists(package, channels)
                     for package in self.output_files)
+                       
+    def all_outputs_tests_exist(self, output_folder):
+        """
+        Returns true if all of the output_files already exist.
+        """
+        #pylint: disable=import-outside-toplevel
+        from open_ce import conda_utils
+
+        # Only check the output folder if it already exists and is a conda channel.
+        channels = self.channels
+        path = "/builddir/ci/testdirectory"
+        if os.path.exists(os.path.join(path, output_folder)):
+            channels = [os.path.abspath(path)] + output_folder
+
+        return all(conda_utils.output_file_exists(package + '-test.log', channels)
+                    for package in self.output_files)
 
     def name(self):
         """
