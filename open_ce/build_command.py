@@ -115,8 +115,8 @@ class BuildCommand():
         # Only check the output folder if it already exists and is a conda channel.
         channels = self.channels
         path = "/builddir/ci/testdirectory"
-        if os.path.exists(os.path.join(path, output_folder)):
-            channels = [os.path.abspath(path)] + output_folder
+        if os.path.exists(os.path.join('/builddir/ci/testdirectory', output_folder)):
+            channels = [os.path.abspath('/buildir/ci/testdirectory')] + output_folder
 
         return all(conda_utils.output_file_exists(package + '-test.log', channels)
                     for package in self.output_files)
